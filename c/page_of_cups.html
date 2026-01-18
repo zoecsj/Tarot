@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Page of Cups</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.5;max-width:720px}
+    .pill{display:inline-block;background:#f1f1f1;border-radius:999px;padding:6px 10px;margin:4px 6px 0 0}
+    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:12px 0}
+    button,a.btn{display:inline-block;border:0;border-radius:12px;padding:12px 14px;background:#111;color:#fff;text-decoration:none;font-weight:600}
+    button.secondary,a.secondary{background:#eee;color:#111}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .toast{margin-top:10px;font-weight:700}
+  </style>
+</head>
+<body>
+  <a class="btn secondary" href="../index.html">Home</a>
+  <a class="btn secondary" href="../spread.html" style="margin-left:8px">View Spread</a>
+
+  <h1 id="name">…</h1>
+
+  <div class="card">
+    <div><strong>Quick meaning</strong></div>
+    <p id="quick">…</p>
+    <div id="keywords"></div>
+  </div>
+
+  <div class="card">
+    <h2>Upright</h2>
+    <p id="upright">…</p>
+    <h2>Reversed</h2>
+    <p id="reversed">…</p>
+  </div>
+
+  <div class="card">
+    <h2>Beginner tip</h2>
+    <p id="tip">…</p>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <button id="addBtn">Add to Spread</button>
+      <button id="removeLastBtn" class="secondary">Undo last add</button>
+    </div>
+    <div id="toast" class="toast"></div>
+  </div>
+
+<script>
+  const CARD = {
+    id: "page_of_cups",
+    name: "Page of Cups",
+    arcana: "Minor Arcana — Cups",
+    quick: "A gentle emotional message—curiosity, sensitivity, and new feelings.",
+    keywords: [
+      "idealism","sensitivity","dreamer","naivete","innocence","inner child","head in the clouds",
+      "emotional vulnerability","immaturity","neglecting inner child","escapism","insecurity"
+    ],
+    upright: "This card is soft, sweet, and a little awkward—in a good way. It can be a crush, an apology, a creative spark, or your intuition tapping you on the shoulder. Think: ‘emotional beginner energy.’",
+    reversed: "Feelings get messy: insecurity, escapism, mood swings, or not knowing how to handle emotions. It can also mean ignoring your inner child (or treating their needs like they’re embarrassing).",
+    tip: "Ask: What is my heart trying to say? Write one sentence starting with “I feel…” without explaining it away."
+  };
+
+  const LS_ACTIVE = "tarot_spread_active";
+  const LS_SPREAD = "tarot_spread_cards";
+
+  function getSpread(){ try { return JSON.parse(localStorage.getItem(LS_SPREAD) || "[]"); } catch { return []; } }
+  function setSpread(arr){ localStorage.setItem(LS_SPREAD, JSON.stringify(arr)); }
+  function show(msg){ document.getElementById("toast").textContent = msg; }
+
+  function addToSpread(){
+    const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+    const spread = getSpread();
+    spread.push({ id: CARD.id, name: CARD.name, time: Date.now() });
+    setSpread(spread);
+    show(spreadModeOn ? "Added (Spread Mode ON)." : "Added (manual add).");
+  }
+
+  function undoLast(){
+    const spread = getSpread();
+    if (spread.length === 0) return show("Nothing to undo.");
+    const last = spread.pop();
+    setSpread(spread);
+    show(`Undid last add (${last.name}).`);
+  }
+
+  document.getElementById("name").textContent = CARD.name;
+  document.getElementById("quick").textContent = CARD.quick;
+  document.getElementById("upright").textContent = CARD.upright;
+  document.getElementById("reversed").textContent = CARD.reversed;
+  document.getElementById("tip").textContent = CARD.tip;
+
+  const kw = document.getElementById("keywords");
+  CARD.keywords.forEach(k => { const s=document.createElement("span"); s.className="pill"; s.textContent=k; kw.appendChild(s); });
+
+  document.getElementById("addBtn").addEventListener("click", addToSpread);
+  document.getElementById("removeLastBtn").addEventListener("click", undoLast);
+
+  const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+  if (spreadModeOn) addToSpread();
+  else show("Spread Mode is OFF. Tap “Add to Spread” if you want to compile.");
+</script>
+</body>
+</html>
