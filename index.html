@@ -1,1 +1,69 @@
-index.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tarot Tap Deck</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.4;max-width:720px}
+    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:12px 0}
+    button,a.btn{display:inline-block;border:0;border-radius:12px;padding:12px 14px;background:#111;color:#fff;text-decoration:none;font-weight:600}
+    button.secondary,a.secondary{background:#eee;color:#111}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .status{font-weight:700}
+    code{background:#f6f6f6;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Tarot Tap Deck</h1>
+
+  <div class="card">
+    <div>Spread Mode: <span id="status" class="status">…</span></div>
+    <div class="row">
+      <button id="startBtn">Start Spread</button>
+      <button id="stopBtn" class="secondary">Stop Spread</button>
+      <a class="btn secondary" href="./spread.html">View Spread</a>
+    </div>
+    <p style="margin-top:12px">
+      Tip: When Spread Mode is on, scanning a card will auto-add it to your spread.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Test card</h2>
+    <p>Open a sample card page:</p>
+    <div class="row">
+      <a class="btn" href="./c/fool.html">The Fool</a>
+    </div>
+    <p style="margin-top:12px">
+      Later you’ll write your NFC tags to URLs like:
+      <br><code>https://YOURNAME.github.io/tarot/c/fool.html</code>
+    </p>
+  </div>
+
+<script>
+  const LS_ACTIVE = "tarot_spread_active";
+  const LS_ID = "tarot_spread_id"; // just for display / future use
+
+  function updateUI(){
+    const active = localStorage.getItem(LS_ACTIVE) === "1";
+    document.getElementById("status").textContent = active ? "ON" : "OFF";
+  }
+
+  document.getElementById("startBtn").addEventListener("click", () => {
+    localStorage.setItem(LS_ACTIVE, "1");
+    if (!localStorage.getItem(LS_ID)) {
+      localStorage.setItem(LS_ID, String(Date.now()));
+    }
+    updateUI();
+  });
+
+  document.getElementById("stopBtn").addEventListener("click", () => {
+    localStorage.setItem(LS_ACTIVE, "0");
+    updateUI();
+  });
+
+  updateUI();
+</script>
+</body>
+</html>
