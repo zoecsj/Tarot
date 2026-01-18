@@ -43,4 +43,62 @@
       <button id="addBtn">Add to Spread</button>
       <button id="removeLastBtn" class="secondary">Undo last add</button>
     </div>
-    <div id="toast" clas
+    <div id="toast" class="toast"></div>
+  </div>
+
+<script>
+  const CARD = {
+    id: "wheel_of_fortune",
+    name: "The Wheel of Fortune",
+    arcana: "Major Arcana",
+    quick: "Life turns. Expect change, watch patterns, and work with the timing.",
+    keywords: [
+      "change","cycles","fate","decisive moments","luck","fortune","unexpected events",
+      "bad luck","lack of control","clinging to control","unwelcome changes","delays"
+    ],
+    upright: "A cycle is shifting. A door opens, timing changes, or an opportunity appears—sometimes without warning. Your job is to stay flexible, say yes to the right moment, and remember that highs and lows don’t last forever.",
+    reversed: "It can feel like the world is doing things to you—delays, bad luck, or messy timing. The trap is clinging to control. Focus on what you CAN influence (choices, preparation, attitude), and let the rest turn.",
+    tip: "Ask: What’s repeating? If you’ve seen this pattern before, what did it teach you last time?"
+  };
+
+  const LS_ACTIVE = "tarot_spread_active";
+  const LS_SPREAD = "tarot_spread_cards";
+
+  function getSpread(){ try { return JSON.parse(localStorage.getItem(LS_SPREAD) || "[]"); } catch { return []; } }
+  function setSpread(arr){ localStorage.setItem(LS_SPREAD, JSON.stringify(arr)); }
+  function show(msg){ document.getElementById("toast").textContent = msg; }
+
+  function addToSpread(){
+    const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+    const spread = getSpread();
+    spread.push({ id: CARD.id, name: CARD.name, time: Date.now() });
+    setSpread(spread);
+    show(spreadModeOn ? "Added (Spread Mode ON)." : "Added (manual add).");
+  }
+
+  function undoLast(){
+    const spread = getSpread();
+    if (spread.length === 0) return show("Nothing to undo.");
+    const last = spread.pop();
+    setSpread(spread);
+    show(`Undid last add (${last.name}).`);
+  }
+
+  document.getElementById("name").textContent = CARD.name;
+  document.getElementById("quick").textContent = CARD.quick;
+  document.getElementById("upright").textContent = CARD.upright;
+  document.getElementById("reversed").textContent = CARD.reversed;
+  document.getElementById("tip").textContent = CARD.tip;
+
+  const kw = document.getElementById("keywords");
+  CARD.keywords.forEach(k => { const s=document.createElement("span"); s.className="pill"; s.textContent=k; kw.appendChild(s); });
+
+  document.getElementById("addBtn").addEventListener("click", addToSpread);
+  document.getElementById("removeLastBtn").addEventListener("click", undoLast);
+
+  const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+  if (spreadModeOn) addToSpread();
+  else show("Spread Mode is OFF. Tap “Add to Spread” if you want to compile.");
+</script>
+</body>
+</html>
