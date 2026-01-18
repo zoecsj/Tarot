@@ -3,67 +3,186 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tarot Tap Deck</title>
+  <title>Tarot NFC Deck</title>
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.4;max-width:720px}
-    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:12px 0}
-    button,a.btn{display:inline-block;border:0;border-radius:12px;padding:12px 14px;background:#111;color:#fff;text-decoration:none;font-weight:600}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.5;max-width:980px}
+    .card{border:1px solid #ddd;border-radius:16px;padding:16px;margin:14px 0}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+    a.link{display:block;border:1px solid #eee;border-radius:14px;padding:12px 12px;text-decoration:none;color:#111;background:#fafafa}
+    a.link:hover{border-color:#ccc}
+    .title{font-weight:800}
+    .sub{opacity:.8;font-size:.95rem;margin-top:2px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+    button,a.btn{display:inline-block;border:0;border-radius:12px;padding:12px 14px;background:#111;color:#fff;text-decoration:none;font-weight:700;cursor:pointer}
     button.secondary,a.secondary{background:#eee;color:#111}
-    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .status{font-weight:700}
-    code{background:#f6f6f6;padding:2px 6px;border-radius:6px}
+    .pill{display:inline-block;background:#f1f1f1;border-radius:999px;padding:6px 10px;margin:4px 6px 0 0}
+    h1{margin:0 0 6px}
+    h2{margin:0 0 10px}
+    .small{font-size:.95rem;opacity:.85}
   </style>
 </head>
 <body>
-  <h1>Tarot Tap Deck</h1>
+  <h1>Tarot NFC Deck</h1>
+  <div class="small">Scan a card to open its meaning. Use “Spread Mode” to auto-compile multiple cards.</div>
+
+  <div class="row">
+    <button id="startSpreadBtn">Start Spread Mode</button>
+    <button id="stopSpreadBtn" class="secondary">Stop Spread Mode</button>
+    <a class="btn secondary" href="spread.html">View Spread</a>
+    <button id="clearSpreadBtn" class="secondary">Clear Spread</button>
+  </div>
+
+  <div id="status" class="pill">Status: …</div>
 
   <div class="card">
-    <div>Spread Mode: <span id="status" class="status">…</span></div>
-    <div class="row">
-      <button id="startBtn">Start Spread</button>
-      <button id="stopBtn" class="secondary">Stop Spread</button>
-      <a class="btn secondary" href="./spread.html">View Spread</a>
+    <h2>Major Arcana</h2>
+    <div class="grid">
+      <a class="link" href="c/fool.html"><div class="title">The Fool</div></a>
+
+      <a class="link" href="c/magician.html"><div class="title">The Magician</div></a>
+      <a class="link" href="c/high_priestess.html"><div class="title">The High Priestess</div></a>
+      <a class="link" href="c/empress.html"><div class="title">The Empress</div></a>
+      <a class="link" href="c/emperor.html"><div class="title">The Emperor</div></a>
+
+      <a class="link" href="c/hierophant.html"><div class="title">The Hierophant</div></a>
+      <a class="link" href="c/lovers.html"><div class="title">The Lovers</div></a>
+      <a class="link" href="c/chariot.html"><div class="title">The Chariot</div></a>
+      <a class="link" href="c/strength.html"><div class="title">Strength</div></a>
+      <a class="link" href="c/hermit.html"><div class="title">The Hermit</div></a>
+
+      <a class="link" href="c/wheel_of_fortune.html"><div class="title">Wheel of Fortune</div></a>
+      <a class="link" href="c/justice.html"><div class="title">Justice</div></a>
+      <a class="link" href="c/hanged_man.html"><div class="title">The Hanged Man</div></a>
+      <a class="link" href="c/death.html"><div class="title">Death</div></a>
+      <a class="link" href="c/temperance.html"><div class="title">Temperance</div></a>
+
+      <a class="link" href="c/devil.html"><div class="title">The Devil</div></a>
+      <a class="link" href="c/tower.html"><div class="title">The Tower</div></a>
+      <a class="link" href="c/star.html"><div class="title">The Star</div></a>
+      <a class="link" href="c/moon.html"><div class="title">The Moon</div></a>
+      <a class="link" href="c/sun.html"><div class="title">The Sun</div></a>
+
+      <a class="link" href="c/judgement.html"><div class="title">Judgement</div></a>
+      <a class="link" href="c/world.html"><div class="title">The World</div></a>
     </div>
-    <p style="margin-top:12px">
-      Tip: When Spread Mode is on, scanning a card will auto-add it to your spread.
-    </p>
   </div>
 
   <div class="card">
-    <h2>Test card</h2>
-    <p>Open a sample card page:</p>
-    <div class="row">
-      <a class="btn" href="./c/fool.html">The Fool</a>
+    <h2>Wands</h2>
+    <div class="grid">
+      <a class="link" href="c/ace_of_wands.html"><div class="title">Ace of Wands</div></a>
+      <a class="link" href="c/two_of_wands.html"><div class="title">Two of Wands</div></a>
+      <a class="link" href="c/three_of_wands.html"><div class="title">Three of Wands</div></a>
+      <a class="link" href="c/four_of_wands.html"><div class="title">Four of Wands</div></a>
+      <a class="link" href="c/five_of_wands.html"><div class="title">Five of Wands</div></a>
+      <a class="link" href="c/six_of_wands.html"><div class="title">Six of Wands</div></a>
+      <a class="link" href="c/seven_of_wands.html"><div class="title">Seven of Wands</div></a>
+      <a class="link" href="c/eight_of_wands.html"><div class="title">Eight of Wands</div></a>
+      <a class="link" href="c/nine_of_wands.html"><div class="title">Nine of Wands</div></a>
+      <a class="link" href="c/ten_of_wands.html"><div class="title">Ten of Wands</div></a>
+
+      <a class="link" href="c/page_of_wands.html"><div class="title">Page of Wands</div></a>
+      <a class="link" href="c/knight_of_wands.html"><div class="title">Knight of Wands</div></a>
+      <a class="link" href="c/queen_of_wands.html"><div class="title">Queen of Wands</div></a>
+      <a class="link" href="c/king_of_wands.html"><div class="title">King of Wands</div></a>
     </div>
-    <p style="margin-top:12px">
-      Later you’ll write your NFC tags to URLs like:
-      <br><code>https://YOURNAME.github.io/tarot/c/fool.html</code>
-    </p>
+    <div class="sub">If any link 404s, it usually means the filename doesn’t exactly match what’s in /c/.</div>
+  </div>
+
+  <div class="card">
+    <h2>Cups</h2>
+    <div class="grid">
+      <a class="link" href="c/ace_of_cups.html"><div class="title">Ace of Cups</div></a>
+      <a class="link" href="c/two_of_cups.html"><div class="title">Two of Cups</div></a>
+      <a class="link" href="c/three_of_cups.html"><div class="title">Three of Cups</div></a>
+      <a class="link" href="c/four_of_cups.html"><div class="title">Four of Cups</div></a>
+      <a class="link" href="c/five_of_cups.html"><div class="title">Five of Cups</div></a>
+      <a class="link" href="c/six_of_cups.html"><div class="title">Six of Cups</div></a>
+      <a class="link" href="c/seven_of_cups.html"><div class="title">Seven of Cups</div></a>
+      <a class="link" href="c/eight_of_cups.html"><div class="title">Eight of Cups</div></a>
+      <a class="link" href="c/nine_of_cups.html"><div class="title">Nine of Cups</div></a>
+      <a class="link" href="c/ten_of_cups.html"><div class="title">Ten of Cups</div></a>
+
+      <a class="link" href="c/page_of_cups.html"><div class="title">Page of Cups</div></a>
+      <a class="link" href="c/knight_of_cups.html"><div class="title">Knight of Cups</div></a>
+      <a class="link" href="c/queen_of_cups.html"><div class="title">Queen of Cups</div></a>
+      <a class="link" href="c/king_of_cups.html"><div class="title">King of Cups</div></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Swords</h2>
+    <div class="grid">
+      <a class="link" href="c/ace_of_swords.html"><div class="title">Ace of Swords</div></a>
+      <a class="link" href="c/two_of_swords.html"><div class="title">Two of Swords</div></a>
+      <a class="link" href="c/three_of_swords.html"><div class="title">Three of Swords</div></a>
+      <a class="link" href="c/four_of_swords.html"><div class="title">Four of Swords</div></a>
+      <a class="link" href="c/five_of_swords.html"><div class="title">Five of Swords</div></a>
+      <a class="link" href="c/six_of_swords.html"><div class="title">Six of Swords</div></a>
+      <a class="link" href="c/seven_of_swords.html"><div class="title">Seven of Swords</div></a>
+      <a class="link" href="c/eight_of_swords.html"><div class="title">Eight of Swords</div></a>
+      <a class="link" href="c/nine_of_swords.html"><div class="title">Nine of Swords</div></a>
+      <a class="link" href="c/ten_of_swords.html"><div class="title">Ten of Swords</div></a>
+
+      <a class="link" href="c/page_of_swords.html"><div class="title">Page of Swords</div></a>
+      <a class="link" href="c/knight_of_swords.html"><div class="title">Knight of Swords</div></a>
+      <a class="link" href="c/queen_of_swords.html"><div class="title">Queen of Swords</div></a>
+      <a class="link" href="c/king_of_swords.html"><div class="title">King of Swords</div></a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Pentacles</h2>
+    <div class="grid">
+      <a class="link" href="c/ace_of_pentacles.html"><div class="title">Ace of Pentacles</div></a>
+      <a class="link" href="c/two_of_pentacles.html"><div class="title">Two of Pentacles</div></a>
+      <a class="link" href="c/three_of_pentacles.html"><div class="title">Three of Pentacles</div></a>
+      <a class="link" href="c/four_of_pentacles.html"><div class="title">Four of Pentacles</div></a>
+      <a class="link" href="c/five_of_pentacles.html"><div class="title">Five of Pentacles</div></a>
+      <a class="link" href="c/six_of_pentacles.html"><div class="title">Six of Pentacles</div></a>
+      <a class="link" href="c/seven_of_pentacles.html"><div class="title">Seven of Pentacles</div></a>
+      <a class="link" href="c/eight_of_pentacles.html"><div class="title">Eight of Pentacles</div></a>
+      <a class="link" href="c/nine_of_pentacles.html"><div class="title">Nine of Pentacles</div></a>
+      <a class="link" href="c/ten_of_pentacles.html"><div class="title">Ten of Pentacles</div></a>
+
+      <a class="link" href="c/page_of_pentacles.html"><div class="title">Page of Pentacles</div></a>
+      <a class="link" href="c/knight_of_pentacles.html"><div class="title">Knight of Pentacles</div></a>
+      <a class="link" href="c/queen_of_pentacles.html"><div class="title">Queen of Pentacles</div></a>
+      <a class="link" href="c/king_of_pentacles.html"><div class="title">King of Pentacles</div></a>
+    </div>
   </div>
 
 <script>
   const LS_ACTIVE = "tarot_spread_active";
-  const LS_ID = "tarot_spread_id"; // just for display / future use
+  const LS_SPREAD = "tarot_spread_cards";
 
-  function updateUI(){
-    const active = localStorage.getItem(LS_ACTIVE) === "1";
-    document.getElementById("status").textContent = active ? "ON" : "OFF";
+  function setStatus(){
+    const on = localStorage.getItem(LS_ACTIVE) === "1";
+    const cards = (() => { try { return JSON.parse(localStorage.getItem(LS_SPREAD) || "[]"); } catch { return []; } })();
+    document.getElementById("status").textContent =
+      `Status: Spread Mode ${on ? "ON" : "OFF"} • Cards saved: ${cards.length}`;
   }
 
-  document.getElementById("startBtn").addEventListener("click", () => {
+  document.getElementById("startSpreadBtn").addEventListener("click", () => {
     localStorage.setItem(LS_ACTIVE, "1");
-    if (!localStorage.getItem(LS_ID)) {
-      localStorage.setItem(LS_ID, String(Date.now()));
-    }
-    updateUI();
+    setStatus();
+    alert("Spread Mode is ON. Now when you scan cards, they’ll auto-add to your spread.");
   });
 
-  document.getElementById("stopBtn").addEventListener("click", () => {
+  document.getElementById("stopSpreadBtn").addEventListener("click", () => {
     localStorage.setItem(LS_ACTIVE, "0");
-    updateUI();
+    setStatus();
+    alert("Spread Mode is OFF.");
   });
 
-  updateUI();
+  document.getElementById("clearSpreadBtn").addEventListener("click", () => {
+    if (confirm("Clear the current spread?")) {
+      localStorage.setItem(LS_SPREAD, "[]");
+      setStatus();
+    }
+  });
+
+  setStatus();
 </script>
 </body>
 </html>
