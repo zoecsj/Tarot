@@ -1,1 +1,141 @@
-spread.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Spread</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.4;max-width:720px}
+    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:12px 0}
+    button,a.btn{display:inline-block;border:0;border-radius:12px;padding:10px 12px;background:#111;color:#fff;text-decoration:none;font-weight:600}
+    button.secondary,a.secondary{background:#eee;color:#111}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    ol{padding-left:22px}
+    li{margin:10px 0}
+    .small{font-size:13px;color:#555}
+    textarea{width:100%;min-height:140px;border-radius:12px;border:1px solid #ddd;padding:10px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+  </style>
+</head>
+<body>
+  <a class="btn secondary" href="./index.html">Home</a>
+
+  <h1>Your Spread</h1>
+
+  <div class="card">
+    <div class="row">
+      <button id="clearBtn" class="secondary">Clear Spread</button>
+      <button id="copyBtn">Copy Summary</button>
+    </div>
+    <p class="small" id="meta"></p>
+  </div>
+
+  <div class="card">
+    <h2>Cards (tap to manage)</h2>
+    <ol id="list"></ol>
+    <p class="small">Reorder = Up/Down. Remove deletes that card from the spread list.</p>
+  </div>
+
+  <div class="card">
+    <h2>Compiled Summary</h2>
+    <textarea id="summary" readonly></textarea>
+  </div>
+
+<script>
+  const LS_SPREAD = "tarot_spread_cards";
+
+  function getSpread(){
+    try { return JSON.parse(localStorage.getItem(LS_SPREAD) || "[]"); }
+    catch { return []; }
+  }
+  function setSpread(arr){
+    localStorage.setItem(LS_SPREAD, JSON.stringify(arr));
+  }
+
+  function buildSummary(spread){
+    if (spread.length === 0) return "No cards yet.\n\nGo scan a card (or start Spread Mode on the Home page).";
+    const lines = [];
+    lines.push("My spread:");
+    spread.forEach((c, i) => lines.push(`${i+1}. ${c.name}`));
+    lines.push("");
+    lines.push("Notes:");
+    lines.push("- What story do these cards tell together?");
+    lines.push("- Which card feels like the ‘main message’?");
+    return lines.join("\n");
+  }
+
+  function render(){
+    const spread = getSpread();
+    document.getElementById("meta").textContent = `${spread.length} card(s) in spread.`;
+
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    spread.forEach((c, idx) => {
+      const li = document.createElement("li");
+
+      const title = document.createElement("div");
+      title.innerHTML = `<strong>${c.name}</strong> <span class="small">(${c.id})</span>`;
+      li.appendChild(title);
+
+      const row = document.createElement("div");
+      row.className = "row";
+
+      const up = document.createElement("button");
+      up.className = "secondary";
+      up.textContent = "Up";
+      up.disabled = idx === 0;
+      up.onclick = () => {
+        const s = getSpread();
+        [s[idx-1], s[idx]] = [s[idx], s[idx-1]];
+        setSpread(s); render();
+      };
+
+      const down = document.createElement("button");
+      down.className = "secondary";
+      down.textContent = "Down";
+      down.disabled = idx === spread.length - 1;
+      down.onclick = () => {
+        const s = getSpread();
+        [s[idx], s[idx+1]] = [s[idx+1], s[idx]];
+        setSpread(s); render();
+      };
+
+      const remove = document.createElement("button");
+      remove.className = "secondary";
+      remove.textContent = "Remove";
+      remove.onclick = () => {
+        const s = getSpread();
+        s.splice(idx, 1);
+        setSpread(s); render();
+      };
+
+      row.appendChild(up);
+      row.appendChild(down);
+      row.appendChild(remove);
+      li.appendChild(row);
+
+      list.appendChild(li);
+    });
+
+    document.getElementById("summary").value = buildSummary(spread);
+  }
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    localStorage.removeItem(LS_SPREAD);
+    render();
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", async () => {
+    const text = document.getElementById("summary").value;
+    try {
+      await navigator.clipboard.writeText(text);
+      alert("Copied!");
+    } catch {
+      alert("Copy failed (some browsers block clipboard). You can manually select/copy the text.");
+    }
+  });
+
+  render();
+</script>
+</body>
+</html>
