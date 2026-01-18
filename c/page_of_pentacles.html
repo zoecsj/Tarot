@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Page of Pentacles</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:24px;line-height:1.5;max-width:720px}
+    .pill{display:inline-block;background:#f1f1f1;border-radius:999px;padding:6px 10px;margin:4px 6px 0 0}
+    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:12px 0}
+    button,a.btn{display:inline-block;border:0;border-radius:12px;padding:12px 14px;background:#111;color:#fff;text-decoration:none;font-weight:600}
+    button.secondary,a.secondary{background:#eee;color:#111}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .toast{margin-top:10px;font-weight:700}
+  </style>
+</head>
+<body>
+  <a class="btn secondary" href="../index.html">Home</a>
+  <a class="btn secondary" href="../spread.html" style="margin-left:8px">View Spread</a>
+
+  <h1 id="name">…</h1>
+
+  <div class="card">
+    <div><strong>Quick meaning</strong></div>
+    <p id="quick">…</p>
+    <div id="keywords"></div>
+  </div>
+
+  <div class="card">
+    <h2>Upright</h2><p id="upright">…</p>
+    <h2>Reversed</h2><p id="reversed">…</p>
+  </div>
+
+  <div class="card">
+    <h2>Beginner tip</h2><p id="tip">…</p>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <button id="addBtn">Add to Spread</button>
+      <button id="removeLastBtn" class="secondary">Undo last add</button>
+    </div>
+    <div id="toast" class="toast"></div>
+  </div>
+
+<script>
+  const CARD = {
+    id: "page_of_pentacles",
+    name: "Page of Pentacles",
+    arcana: "Minor Arcana — Pentacles",
+    quick: "Student energy—learning, planning, and starting something practical.",
+    keywords: ["study","skill-building","new project","manifestation","planning","responsibility","lack of progress","procrastination","unrealistic goals","carelessness"],
+    upright: "A new goal you can actually build: learning a skill, starting a project, budgeting, or committing to a practical plan. It’s early-stage but promising—show up consistently and it grows.",
+    reversed: "Plans without follow-through. Procrastination, careless spending, or wanting results without doing the basics. It can also be unrealistic expectations about time/money/effort.",
+    tip: "Ask: What does ‘showing up’ look like this week? Choose one small repeatable action (30 minutes, one lesson, one budget check)."
+  };
+
+  const LS_ACTIVE="tarot_spread_active", LS_SPREAD="tarot_spread_cards";
+  function getSpread(){ try{return JSON.parse(localStorage.getItem(LS_SPREAD)||"[]");}catch{return[];} }
+  function setSpread(a){ localStorage.setItem(LS_SPREAD, JSON.stringify(a)); }
+  function show(m){ document.getElementById("toast").textContent=m; }
+  function addToSpread(){ const on=localStorage.getItem(LS_ACTIVE)==="1"; const s=getSpread(); s.push({id:CARD.id,name:CARD.name,time:Date.now()}); setSpread(s); show(on?"Added (Spread Mode ON).":"Added (manual add)."); }
+  function undoLast(){ const s=getSpread(); if(!s.length) return show("Nothing to undo."); const last=s.pop(); setSpread(s); show(`Undid last add (${last.name}).`); }
+
+  document.getElementById("name").textContent=CARD.name;
+  document.getElementById("quick").textContent=CARD.quick;
+  document.getElementById("upright").textContent=CARD.upright;
+  document.getElementById("reversed").textContent=CARD.reversed;
+  document.getElementById("tip").textContent=CARD.tip;
+
+  const kw=document.getElementById("keywords");
+  CARD.keywords.forEach(k=>{const s=document.createElement("span"); s.className="pill"; s.textContent=k; kw.appendChild(s);});
+
+  document.getElementById("addBtn").addEventListener("click", addToSpread);
+  document.getElementById("removeLastBtn").addEventListener("click", undoLast);
+
+  const on=localStorage.getItem(LS_ACTIVE)==="1";
+  if(on) addToSpread(); else show("Spread Mode is OFF. Tap “Add to Spread” if you want to compile.");
+</script>
+</body>
+</html>
