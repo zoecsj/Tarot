@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fool</title>
+</head>
+<body>
+    <h1>The Fool</h1>
+    <p><strong>Arcana:</strong> Major Arcana</p>
+    <p><strong>Quick Summary:</strong> New beginnings—a leap of faith with no guarantees.</p>
+    <h2>Keywords</h2>
+    <ul>
+        <li>new beginnings</li>
+        <li>taking risks</li>
+        <li>innocence</li>
+        <li>naivete</li>
+        <li>foolishness</li>
+        <li>recklessness</li>
+    </ul>
+    <h2>Upright Interpretation</h2>
+    <p>You're at a threshold: starting fresh, trusting the unknown, or taking a leap. This card asks: are you ready to not know the answer before you jump?</p>
+    <h2>Reversed Interpretation</h2>
+    <p>Fear is holding you back, or you're being genuinely reckless. The difference: intuition + preparation vs. impulse + no plan. Check your grounding.</p>
+    <h2>Tip</h2>
+    <p>Ask: What would I do if I trusted myself? Pick one small leap—not a cliff dive.</p>
+    <script>
+        const CARD = {
+            id: 'fool',
+            name: 'The Fool',
+            arcana: 'Major Arcana',
+            quick: 'New beginnings—a leap of faith with no guarantees.',
+            keywords: ['new beginnings', 'taking risks', 'innocence', 'naivete', 'foolishness', 'recklessness'],
+            upright: "You're at a threshold: starting fresh, trusting the unknown, or taking a leap. This card asks: are you ready to not know the answer before you jump?",
+            reversed: 'Fear is holding you back, or you\'re being genuinely reckless. The difference: intuition + preparation vs. impulse + no plan. Check your grounding.',
+            tip: 'Ask: What would I do if I trusted myself? Pick one small leap—not a cliff dive.'
+        };
+
+        function saveCardData() {
+            localStorage.setItem(CARD.id, JSON.stringify(CARD));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            saveCardData();
+        });
+    </script>
+</body>
+</html>
