@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three-Card Spread</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Martel+Sans:wght@300;400;600;700&family=Sail&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <a href="index.html">Wizard:քǟֆȶ քʀɛֆɛռȶ ʄʊȶʊʀɛ</a>
+      <div class="nav-links">
+        <a href="spread.html">Spreads</a>
+        <a href="cards/index.html">Cards</a>
+        <a href="cards/major_arcana/index.html">Major Arcana</a>
+        <a href="guide.html">How to Read</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="panel">
+        <span class="tag">NFC-ready 3-card spread</span>
+        <h1>Wizard:քǟֆȶ քʀɛֆɛռȶ ʄʊȶʊʀɛ</h1>
+        <p>Tap your physical NFC card tags in order to build your Past → Present → Future spread. Each tag should open this page with <code>?tap=card-name</code>.</p>
+        <p id="nfc-progress" class="nfc-progress" hidden>Tapped cards: 0/3</p>
+        <div class="nav-links">
+          <button class="button" type="button" onclick="location.reload()">Random draw</button>
+          <button class="button secondary" id="clear-spread" type="button">Clear tapped spread</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid">
+        <article class="card">
+          <span class="tag">Past</span>
+          <h3 id="past-name">Card</h3>
+          <p id="past-summary">Insight from what brought you here.</p>
+          <a id="past-link" href="cards/fool.html">Read the card →</a>
+        </article>
+        <article class="card">
+          <span class="tag">Present</span>
+          <h3 id="present-name">Card</h3>
+          <p id="present-summary">The energy surrounding you now.</p>
+          <a id="present-link" href="cards/major_arcana/moon.html">Read the card →</a>
+        </article>
+        <article class="card">
+          <span class="tag">Future</span>
+          <h3 id="future-name">Card</h3>
+          <p id="future-summary">A possible direction to explore.</p>
+          <a id="future-link" href="cards/ace_of_cups.html">Read the card →</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>

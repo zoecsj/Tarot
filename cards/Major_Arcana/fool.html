@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fool</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            margin: 24px;
-            line-height: 1.5;
-            max-width: 720px;
-        }
-        /* Add additional styles as needed */
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Fool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Martel+Sans:wght@300;400;600;700&family=Sail&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles/main.css">
 </head>
 <body>
-    <h1>Fool</h1>
-    <p>Quick: Beginning, innocence, spontaneity</p>
-    <p>Keywords: <span class="pill">new beginnings</span></p>
-    <p>Upright: A new adventure, trust in life</p>
-    <p>Reversed: Fear of the unknown, holding back</p>
-    <p>Tip: Take a leap of faith!</p>
-
-    <script>
-        const CARD = {
-            id: '0',
-            name: 'Fool',
-            arcana: 'Major Arcana',
-            quick: 'Beginning, innocence, spontaneity',
-            keywords: ['new beginnings'],
-            upright: 'A new adventure, trust in life',
-            reversed: 'Fear of the unknown, holding back',
-            tip: 'Take a leap of faith!'
-        };
-
-        // Example of utilizing localStorage for spread mode functionality
-    </script>
-
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="../spread.html">View Spread</a>
+  <header>
+    <nav class="nav">
+      <a href="../../index.html">Wizard:քǟֆȶ քʀɛֆɛռȶ ʄʊȶʊʀɛ</a>
+      <div class="nav-links">
+        <a href="../../spread.html">Spreads</a>
+        <a href="../../cards/index.html">Cards</a>
+        <a href="../../cards/major_arcana/index.html">Major Arcana</a>
+        <a href="../../guide.html">How to Read</a>
+      </div>
     </nav>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="panel">
+        <span class="tag">Major Arcana · 0</span>
+        <h1>The Fool</h1>
+        <p>Quick: Beginning, innocence, spontaneity.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid">
+        <article class="card">
+          <h3>Keywords</h3>
+          <p>New beginnings · Leap of faith · Curiosity</p>
+        </article>
+        <article class="card">
+          <h3>Upright</h3>
+          <p>A new adventure is available. Trust life and step forward with openness.</p>
+        </article>
+        <article class="card">
+          <h3>Reversed</h3>
+          <p>Fear of the unknown can hold you back, or impulsiveness can overreach. Find balance.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel">
+        <h2>Tip</h2>
+        <p>Take one grounded leap of faith this week.</p>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

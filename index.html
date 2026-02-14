@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarot Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Martel+Sans:wght@300;400;600;700&family=Sail&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <a href="index.html">Wizard:քǟֆȶ քʀɛֆɛռȶ ʄʊȶʊʀɛ</a>
+      <div class="nav-links">
+        <a href="spread.html">Spreads</a>
+        <a href="cards/index.html">Cards</a>
+        <a href="cards/major_arcana/index.html">Major Arcana</a>
+        <a href="guide.html">How to Read</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="tag">NFC Tarot Builder</span>
+        <h1>Wizard:քǟֆȶ քʀɛֆɛռȶ ʄʊȶʊʀɛ</h1>
+        <p>Build phone-based readings by tapping NFC-tagged cards in sequence, or use a random draw for quick guidance.</p>
+        <div class="nav-links">
+          <a class="button" href="spread.html">Pull a spread</a>
+          <a class="button secondary" href="#cards">Browse cards</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Today’s quick draw</h2>
+        <p id="daily-card-summary">A single card to set the tone.</p>
+        <div class="list">
+          <strong id="daily-card-name">The Fool</strong>
+          <a id="daily-card-link" href="cards/fool.html">Read the card →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cards">
+      <h2>Featured cards</h2>
+      <p>Start with a focused collection of key archetypes.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>The Fool</h3>
+          <p>New beginnings, curiosity, and trusting the journey.</p>
+          <a href="cards/fool.html">Open card →</a>
+        </article>
+        <article class="card">
+          <h3>The Moon</h3>
+          <p>Intuition, dreams, and learning to read the tides.</p>
+          <a href="cards/major_arcana/moon.html">Open card →</a>
+        </article>
+        <article class="card">
+          <h3>Ace of Cups</h3>
+          <p>Emotional renewal and leading with the heart.</p>
+          <a href="cards/ace_of_cups.html">Open card →</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel">
+        <h2>NFC tag URL format</h2>
+        <p>Program each physical card tag with your deployed spread URL plus a tap slug:</p>
+        <p><code>https://your-site.netlify.app/spread.html?tap=the-fool</code></p>
+        <p>The spread stores up to three taps in order: Past, Present, Future.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Tarot Companion is a reflective tool, not a substitute for professional advice. Always trust your intuition.</p>
+    </footer>
+  </main>
+
+  <script src="scripts/app.js"></script>
+</body>
+</html>
