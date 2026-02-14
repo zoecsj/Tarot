@@ -1,59 +1,487 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Fool</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Martel+Sans:wght@300;400;600;700&family=Sail&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles/main.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Fool - Tarot NFC Deck</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    
+    a.btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+    
+    a.btn:hover {
+      background: #f8f9fa;
+      transform: translateY(-2px);
+    }
+    
+    .card-header {
+      margin-bottom: 24px;
+    }
+    
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .arcana-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .section {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px 0;
+      border: 1px solid #e9ecef;
+    }
+    
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 1.3rem;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .section p {
+      margin: 0;
+      color: #555;
+      line-height: 1.7;
+    }
+    
+    .quick-meaning {
+      background: linear-gradient(135deg, #f0f4ff 0%, #fef0ff 100%);
+      border-left: 4px solid #667eea;
+    }
+    
+    .quick-meaning p {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    
+    .keyword {
+      display: inline-block;
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      color: #555;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .keyword:hover {
+      border-color: #667eea;
+      color: #667eea;
+      transform: translateY(-2px);
+    }
+    
+    .upright-section {
+      border-left: 4px solid #28a745;
+    }
+    
+    .upright-section h2::before {
+      content: "⬆️";
+      font-size: 1.2rem;
+    }
+    
+    .reversed-section {
+      border-left: 4px solid #dc3545;
+    }
+    
+    .reversed-section h2::before {
+      content: "⬇️";
+      font-size: 1.2rem;
+    }
+    
+    .tip-section {
+      background: #fff9e6;
+      border-left: 4px solid #ffc107;
+    }
+    
+    .tip-section h2::before {
+      content: "💡";
+      font-size: 1.2rem;
+    }
+    
+    .tip-section p {
+      font-style: italic;
+      color: #666;
+    }
+    
+    .actions {
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      font-size: 0.95rem;
+      flex: 1;
+      justify-content: center;
+      min-width: 180px;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button.secondary {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      box-shadow: none;
+    }
+    
+    button.secondary:hover {
+      background: #f8f9fa;
+    }
+    
+    .toast {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+    
+    .toast.show {
+      display: flex;
+    }
+    
+    .toast.error {
+      background: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .spread-status {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      border: 2px solid #e9ecef;
+    }
+    
+    .spread-status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #dc3545;
+    }
+    
+    .spread-status-dot.active {
+      background: #28a745;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .spread-status-text {
+      font-weight: 600;
+      flex: 1;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 16px;
+      }
+      
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .button-row {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+        min-width: auto;
+      }
+      
+      .nav-buttons {
+        flex-direction: column;
+      }
+      
+      a.btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-        <nav class="nav">
-      <a href="../index.html">Tarot Companion</a>
-      <div class="nav-links">
-        <a href="../spread.html">Spreads</a>
-        <a href="../cards/index.html">Cards</a>
-        <a href="../cards/major_arcana/index.html">Major Arcana</a>
-        <a href="../guide.html">How to Read</a>
-      </div>
-    </nav>
-  </header>
+  <div class="container">
+    <div class="nav-buttons">
+      <a class="btn" href="../index.html">
+        <span>←</span> Back to Deck
+      </a>
+      <a class="btn" href="../spread.html">
+        <span>👁</span> View Spread
+      </a>
+    </div>
 
-  <main>
-    <section class="section">
-      <div class="panel">
-        <span class="tag">Major Arcana · 0</span>
-        <h1>The Fool</h1>
-        <p>New beginnings—a leap of faith with no guarantees.</p>
-      </div>
-    </section>
+    <div class="card-header">
+      <h1>The Fool</h1>
+      <span class="arcana-badge">Major Arcana</span>
+    </div>
 
-    <section class="section">
-      <div class="grid">
-        <article class="card">
-          <h3>Keywords</h3>
-          <p>New beginnings · Taking risks · Innocence · Naivete · Curiosity · Recklessness</p>
-        </article>
-        <article class="card">
-          <h3>Upright</h3>
-          <p>You are at a threshold: starting fresh, trusting the unknown, or taking a leap. Ask yourself what becomes possible when you loosen your grip.</p>
-        </article>
-        <article class="card">
-          <h3>Reversed</h3>
-          <p>Fear can keep you from the journey, or impulsiveness can push you over the edge. Find the balance between intuition and preparation.</p>
-        </article>
-      </div>
-    </section>
+    <div class="section quick-meaning">
+      <h2>✨ Quick Meaning</h2>
+      <p>New beginnings, curiosity, a leap of faith.</p>
+      <div class="keywords" id="keywords"></div>
+    </div>
 
-    <section class="section">
-      <div class="panel">
-        <h2>Reflection prompt</h2>
-        <p>What would you attempt if you trusted yourself completely? Choose one small leap this week.</p>
+    <div class="section upright-section">
+      <h2>Upright</h2>
+      <p>You're stepping into something new. Stay open, be curious, and don't overthink the first step.</p>
+    </div>
+
+    <div class="section reversed-section">
+      <h2>Reversed</h2>
+      <p>Hesitation, recklessness, or ignoring red flags. Slow down and check your footing before you leap.</p>
+    </div>
+
+    <div class="section tip-section">
+      <h2>Beginner Tip</h2>
+      <p>Ask: What's the smallest brave step I can take today?</p>
+    </div>
+
+    <div class="actions">
+      <div class="spread-status">
+        <span class="spread-status-dot" id="statusDot"></span>
+        <span class="spread-status-text" id="statusText">Checking spread mode...</span>
       </div>
-    </section>
-  </main>
+      
+      <div class="button-row">
+        <button id="addBtn">
+          <span>➕</span> Add to Spread
+        </button>
+        <button id="removeLastBtn" class="secondary">
+          <span>↶</span> Undo Last Add
+        </button>
+      </div>
+      
+      <div id="toast" class="toast"></div>
+    </div>
+  </div>
+
+  <script>
+    const CARD = {
+      id: "fool",
+      name: "The Fool",
+      arcana: "Major Arcana",
+      quick: "New beginnings, curiosity, a leap of faith.",
+      keywords: ["fresh start", "trust", "adventure", "freedom"],
+      upright: "You\'re stepping into something new. Stay open, be curious, and don\'t overthink the first step.",
+      reversed: "Hesitation, recklessness, or ignoring red flags. Slow down and check your footing before you leap.",
+      tip: "Ask: What\'s the smallest brave step I can take today?"
+    };
+
+    const LS_ACTIVE = "tarot_spread_active";
+    const LS_SPREAD = "tarot_spread_cards";
+
+    function getSpread() {
+      try {
+        return JSON.parse(localStorage.getItem(LS_SPREAD) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function setSpread(arr) {
+      localStorage.setItem(LS_SPREAD, JSON.stringify(arr));
+    }
+
+    function updateSpreadStatus() {
+      const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+      const statusDot = document.getElementById("statusDot");
+      const statusText = document.getElementById("statusText");
+      
+      statusDot.classList.toggle("active", spreadModeOn);
+      statusText.textContent = spreadModeOn 
+        ? "Spread Mode: ON (auto-adding)" 
+        : "Spread Mode: OFF (manual mode)";
+    }
+
+    function showToast(message, isError = false) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.toggle("error", isError);
+      toast.classList.add("show");
+      
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    function addToSpread() {
+      const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+      const spread = getSpread();
+      
+      const alreadyAdded = spread.some(card => card.id === CARD.id);
+      
+      spread.push({ 
+        id: CARD.id, 
+        name: CARD.name, 
+        time: Date.now() 
+      });
+      setSpread(spread);
+      
+      const mode = spreadModeOn ? "auto-mode" : "manual";
+      const duplicate = alreadyAdded ? " (duplicate)" : "";
+      showToast(`✅ Added "${CARD.name}" to spread (${mode})${duplicate}`);
+    }
+
+    function undoLast() {
+      const spread = getSpread();
+      if (spread.length === 0) {
+        showToast("❌ Nothing to undo - spread is empty.", true);
+        return;
+      }
+      
+      const last = spread.pop();
+      setSpread(spread);
+      showToast(`↶ Removed "${last.name}" from spread`);
+    }
+
+    // Populate keywords
+    const keywordsContainer = document.getElementById("keywords");
+    CARD.keywords.forEach(keyword => {
+      const span = document.createElement("span");
+      span.className = "keyword";
+      span.textContent = keyword;
+      keywordsContainer.appendChild(span);
+    });
+
+    // Event listeners
+    document.getElementById("addBtn").addEventListener("click", addToSpread);
+    document.getElementById("removeLastBtn").addEventListener("click", undoLast);
+
+    // Initialize
+    updateSpreadStatus();
+
+    // Auto-add if spread mode is on
+    const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+    if (spreadModeOn) {
+      setTimeout(() => {
+        addToSpread();
+      }, 500);
+    }
+  </script>
 </body>
 </html>
