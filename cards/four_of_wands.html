@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ace of Cups - Tarot NFC Deck</title>
+  <title>Four of Wands - Tarot NFC Deck</title>
   <style>
     * {
       box-sizing: border-box;
@@ -336,29 +336,29 @@
     </div>
 
     <div class="card-header">
-      <h1 id="name">Loading...</h1>
-      <span class="arcana-badge" id="arcana">Minor Arcana</span>
+      <h1>Four of Wands</h1>
+      <span class="arcana-badge">Minor Arcana — Wands</span>
     </div>
 
     <div class="section quick-meaning">
       <h2>✨ Quick Meaning</h2>
-      <p id="quick">Loading card meaning...</p>
+      <p>Celebration and stability—homecoming, milestones, community.</p>
       <div class="keywords" id="keywords"></div>
     </div>
 
     <div class="section upright-section">
       <h2>Upright</h2>
-      <p id="upright">Loading upright meaning...</p>
+      <p>A good pause. This is a milestone, a win, or a moment of belonging. It can be celebration, family/community support, or simply feeling grounded and safe.</p>
     </div>
 
     <div class="section reversed-section">
       <h2>Reversed</h2>
-      <p id="reversed">Loading reversed meaning...</p>
+      <p>The party doesn't feel safe, or the 'home' energy is tense. It can be lack of support, awkward group dynamics, or instability in the environment.</p>
     </div>
 
     <div class="section tip-section">
       <h2>Beginner Tip</h2>
-      <p id="tip">Loading tip...</p>
+      <p>Ask: What deserves celebration right now? If support is missing, where can I create a 'safe base' for myself?</p>
     </div>
 
     <div class="actions">
@@ -380,122 +380,108 @@
     </div>
   </div>
 
-<script>
-  const CARD = {
-    id: "ace_of_cups",
-    name: "Ace of Cups",
-    arcana: "Minor Arcana — Cups",
-    quick: "A new emotional beginning—open heart, fresh feelings, and healing.",
-    keywords: [
-      "love", "new feelings", "emotional awakening", "creativity", "spirituality", "intuition",
-      "coldness", "emptiness", "emotional loss", "blocked creativity", "feeling unloved", "gloominess"
-    ],
-    upright: "This is the heart opening. A new relationship, deeper connection, emotional relief, or a return of tenderness toward yourself. It can also be a creative or spiritual 'yes'—your intuition is coming online.",
-    reversed: "Something is blocked or drained: emotional numbness, feeling disconnected, or giving from an empty cup. It may be time to grieve, rest, or re-learn self-care before you can genuinely receive or offer love.",
-    tip: "Ask: What would fill my cup by 10% today? Pick one small act of care (message a friend, cry, nap, create, pray—whatever is real for you)."
-  };
+  <script>
+    const CARD = {
+      id: "four_of_wands",
+      name: "Four of Wands",
+      arcana: "Minor Arcana — Wands",
+      quick: "Celebration and stability—homecoming, milestones, community.",
+      keywords: ["celebration", "harmony", "homecoming", "community", "milestone", "lack of support", "tension at home", "instability"],
+      upright: "A good pause. This is a milestone, a win, or a moment of belonging. It can be celebration, family/community support, or simply feeling grounded and safe.",
+      reversed: "The party doesn\'t feel safe, or the \'home\' energy is tense. It can be lack of support, awkward group dynamics, or instability in the environment.",
+      tip: "Ask: What deserves celebration right now? If support is missing, where can I create a \'safe base\' for myself?"
+    };
 
-  const LS_ACTIVE = "tarot_spread_active";
-  const LS_SPREAD = "tarot_spread_cards";
+    const LS_ACTIVE = "tarot_spread_active";
+    const LS_SPREAD = "tarot_spread_cards";
 
-  function getSpread() {
-    try {
-      return JSON.parse(localStorage.getItem(LS_SPREAD) || "[]");
-    } catch {
-      return [];
+    function getSpread() {
+      try {
+        return JSON.parse(localStorage.getItem(LS_SPREAD) || "[]");
+      } catch {
+        return [];
+      }
     }
-  }
 
-  function setSpread(arr) {
-    localStorage.setItem(LS_SPREAD, JSON.stringify(arr));
-  }
+    function setSpread(arr) {
+      localStorage.setItem(LS_SPREAD, JSON.stringify(arr));
+    }
 
-  function updateSpreadStatus() {
-    const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
-    const statusDot = document.getElementById("statusDot");
-    const statusText = document.getElementById("statusText");
-    
-    statusDot.classList.toggle("active", spreadModeOn);
-    statusText.textContent = spreadModeOn 
-      ? "Spread Mode: ON (auto-adding)" 
-      : "Spread Mode: OFF (manual mode)";
-  }
+    function updateSpreadStatus() {
+      const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+      const statusDot = document.getElementById("statusDot");
+      const statusText = document.getElementById("statusText");
+      
+      statusDot.classList.toggle("active", spreadModeOn);
+      statusText.textContent = spreadModeOn 
+        ? "Spread Mode: ON (auto-adding)" 
+        : "Spread Mode: OFF (manual mode)";
+    }
 
-  function showToast(message, isError = false) {
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.classList.toggle("error", isError);
-    toast.classList.add("show");
-    
-    // Auto-hide after 3 seconds
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 3000);
-  }
+    function showToast(message, isError = false) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.toggle("error", isError);
+      toast.classList.add("show");
+      
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
 
-  function addToSpread() {
-    const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
-    const spread = getSpread();
-    
-    // Check if card is already in spread
-    const alreadyAdded = spread.some(card => card.id === CARD.id);
-    
-    spread.push({ 
-      id: CARD.id, 
-      name: CARD.name, 
-      time: Date.now() 
+    function addToSpread() {
+      const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+      const spread = getSpread();
+      
+      const alreadyAdded = spread.some(card => card.id === CARD.id);
+      
+      spread.push({ 
+        id: CARD.id, 
+        name: CARD.name, 
+        time: Date.now() 
+      });
+      setSpread(spread);
+      
+      const mode = spreadModeOn ? "auto-mode" : "manual";
+      const duplicate = alreadyAdded ? " (duplicate)" : "";
+      showToast(`✅ Added "${CARD.name}" to spread (${mode})${duplicate}`);
+    }
+
+    function undoLast() {
+      const spread = getSpread();
+      if (spread.length === 0) {
+        showToast("❌ Nothing to undo - spread is empty.", true);
+        return;
+      }
+      
+      const last = spread.pop();
+      setSpread(spread);
+      showToast(`↶ Removed "${last.name}" from spread`);
+    }
+
+    // Populate keywords
+    const keywordsContainer = document.getElementById("keywords");
+    CARD.keywords.forEach(keyword => {
+      const span = document.createElement("span");
+      span.className = "keyword";
+      span.textContent = keyword;
+      keywordsContainer.appendChild(span);
     });
-    setSpread(spread);
-    
-    const mode = spreadModeOn ? "auto-mode" : "manual";
-    const duplicate = alreadyAdded ? " (duplicate)" : "";
-    showToast(`✅ Added "${CARD.name}" to spread (${mode})${duplicate}`);
-  }
 
-  function undoLast() {
-    const spread = getSpread();
-    if (spread.length === 0) {
-      showToast("❌ Nothing to undo - spread is empty.", true);
-      return;
+    // Event listeners
+    document.getElementById("addBtn").addEventListener("click", addToSpread);
+    document.getElementById("removeLastBtn").addEventListener("click", undoLast);
+
+    // Initialize
+    updateSpreadStatus();
+
+    // Auto-add if spread mode is on
+    const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
+    if (spreadModeOn) {
+      setTimeout(() => {
+        addToSpread();
+      }, 500);
     }
-    
-    const last = spread.pop();
-    setSpread(spread);
-    showToast(`↶ Removed "${last.name}" from spread`);
-  }
-
-  // Populate card data
-  document.getElementById("name").textContent = CARD.name;
-  document.getElementById("arcana").textContent = CARD.arcana;
-  document.getElementById("quick").textContent = CARD.quick;
-  document.getElementById("upright").textContent = CARD.upright;
-  document.getElementById("reversed").textContent = CARD.reversed;
-  document.getElementById("tip").textContent = CARD.tip;
-
-  // Populate keywords
-  const keywordsContainer = document.getElementById("keywords");
-  CARD.keywords.forEach(keyword => {
-    const span = document.createElement("span");
-    span.className = "keyword";
-    span.textContent = keyword;
-    keywordsContainer.appendChild(span);
-  });
-
-  // Event listeners
-  document.getElementById("addBtn").addEventListener("click", addToSpread);
-  document.getElementById("removeLastBtn").addEventListener("click", undoLast);
-
-  // Initialize
-  updateSpreadStatus();
-
-  // Auto-add if spread mode is on
-  const spreadModeOn = localStorage.getItem(LS_ACTIVE) === "1";
-  if (spreadModeOn) {
-    // Small delay to make the auto-add visible
-    setTimeout(() => {
-      addToSpread();
-    }, 500);
-  }
-</script>
+  </script>
 </body>
 </html>
