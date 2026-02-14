@@ -116,10 +116,19 @@ const CARDS = [
   }
 ];
 
+const NFC_STORAGE_KEY = "tarotNfcSpread";
+
 const randomCard = () => {
   const index = Math.floor(Math.random() * CARDS.length);
   return CARDS[index];
 };
+
+const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+const CARD_BY_SLUG = CARDS.reduce((lookup, card) => {
+  lookup[normalize(card.name)] = card;
+  return lookup;
+}, {});
 
 const setText = (id, value) => {
   const node = document.getElementById(id);
@@ -135,6 +144,47 @@ const setLink = (id, value) => {
   }
 };
 
+const setVisible = (id, visible) => {
+  const node = document.getElementById(id);
+  if (node) {
+    node.hidden = !visible;
+  }
+};
+
+const parseSpreadCards = () => {
+  try {
+    const raw = localStorage.getItem(NFC_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveSpreadCards = (cards) => {
+  localStorage.setItem(NFC_STORAGE_KEY, JSON.stringify(cards.slice(0, 3)));
+};
+
+const clearSpreadCards = () => {
+  localStorage.removeItem(NFC_STORAGE_KEY);
+};
+
+const addTappedCard = (slug) => {
+  const card = CARD_BY_SLUG[slug];
+  if (!card) {
+    return;
+  }
+
+  const cards = parseSpreadCards();
+  if (cards.length === 3) {
+    cards.shift();
+  }
+
+  cards.push(card);
+  saveSpreadCards(cards);
+};
+
+const getUrlParams = () => new URLSearchParams(window.location.search);
+
 const renderDailyDraw = () => {
   const card = randomCard();
   setText("daily-card-name", card.name);
@@ -143,16 +193,48 @@ const renderDailyDraw = () => {
 };
 
 const renderSpread = () => {
-  const slots = ["past", "present", "future"].map((slot) => ({
-    slot,
-    card: randomCard()
-  }));
+  const slots = ["past", "present", "future"];
+  const params = getUrlParams();
+  const tappedSlug = params.get("tap");
 
-  slots.forEach(({ slot, card }) => {
+  if (tappedSlug) {
+    addTappedCard(normalize(tappedSlug));
+    window.history.replaceState({}, "", window.location.pathname);
+  }
+
+  const tappedCards = parseSpreadCards();
+  const useTappedCards = tappedCards.length > 0;
+
+  const spreadCards = useTappedCards
+    ? slots.map((_, index) => tappedCards[index] || null)
+    : slots.map(() => randomCard());
+
+  slots.forEach((slot, index) => {
+    const card = spreadCards[index];
+    if (!card) {
+      setText(`${slot}-name`, "Waiting for tap...");
+      setText(`${slot}-summary`, "Tap another NFC card to fill this position.");
+      setLink(`${slot}-link`, "cards/index.html");
+      return;
+    }
+
     setText(`${slot}-name`, card.name);
     setText(`${slot}-summary`, card.summary);
     setLink(`${slot}-link`, card.path);
   });
+
+  setVisible("nfc-progress", useTappedCards);
+  setText("nfc-progress", `Tapped cards: ${tappedCards.length}/3`);
+};
+
+const bindControls = () => {
+  const clearButton = document.getElementById("clear-spread");
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      clearSpreadCards();
+      window.location.reload();
+    });
+  }
 };
 
 const init = () => {
@@ -162,6 +244,7 @@ const init = () => {
   if (document.getElementById("past-name")) {
     renderSpread();
   }
+  bindControls();
 };
 
 document.addEventListener("DOMContentLoaded", init);

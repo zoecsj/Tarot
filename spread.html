@@ -11,8 +11,8 @@
 </head>
 <body>
   <header>
-        <nav class="nav">
-      <a href="index.html">Tarot Companion</a>
+    <nav class="nav">
+      <a href="index.html">Wizard:քǟֆȶ քʀɛֆɛռȶ ʄʊȶʊʀɛ</a>
       <div class="nav-links">
         <a href="spread.html">Spreads</a>
         <a href="cards/index.html">Cards</a>
@@ -25,10 +25,14 @@
   <main>
     <section class="section">
       <div class="panel">
-        <span class="tag">3-card spread</span>
-        <h1>Past • Present • Future</h1>
-        <p>Take a deep breath, ask your question, and draw three cards. Each card is a prompt for reflection.</p>
-        <button class="button" type="button" onclick="location.reload()">Draw again</button>
+        <span class="tag">NFC-ready 3-card spread</span>
+        <h1>Wizard:քǟֆȶ քʀɛֆɛռȶ ʄʊȶʊʀɛ</h1>
+        <p>Tap your physical NFC card tags in order to build your Past → Present → Future spread. Each tag should open this page with <code>?tap=card-name</code>.</p>
+        <p id="nfc-progress" class="nfc-progress" hidden>Tapped cards: 0/3</p>
+        <div class="nav-links">
+          <button class="button" type="button" onclick="location.reload()">Random draw</button>
+          <button class="button secondary" id="clear-spread" type="button">Clear tapped spread</button>
+        </div>
       </div>
     </section>
 
